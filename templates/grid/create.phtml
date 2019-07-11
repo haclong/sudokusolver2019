@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Sudoku Solver - Create Grid</title>
+        
+        <link rel="stylesheet" href="../css/sudoku.css" />
+        <link rel="stylesheet" href="../css/bootstrap.min.css" />
+        <script src="../js/jquery-3.1.0.min.js"></script>
+    </head>
+    <body>
+
+		<form method="post">
+		    <select name="size">
+		        <option value="4">4</option>
+		        <option value="9">9</option>
+		        <option value="16">16</option>
+		        <option value="25">25</option>
+		    </select>
+		    <select name="level">
+		        <option value="easy">easy</option>
+		        <option value="normal">normal</option>
+		        <option value="hard">hard</option>
+		        <option value="crazy">crazy</option>
+		    </select>
+		    <input type="submit" name="createGrid" class="btn btn-primary btn-lg" value="Create"/>
+		</form>
+
+    </body>
+</html>

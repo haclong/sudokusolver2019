@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Sudoku Solver - New Grid</title>
+        
+        <link rel="stylesheet" href="../css/sudoku.css" />
+        <link rel="stylesheet" href="../css/bootstrap.min.css" />
+        <script src="../js/jquery-3.1.0.min.js"></script>
+    </head>
+    <body>
+
+<form method="post">
+<table class="sudoku_grid">
+    <?php
+        for($row = 0; $row < 9; $row++)
+        {
+    ?>
+        <tr>
+            <?php
+                for($col = 0; $col < 9; $col++)
+                {
+                    $topStyle = '' ;
+                    $leftStyle = '' ;
+                    
+                    if($row % sqrt(9) == 0) {
+                        $topStyle = " region_border_top" ;
+                    }
+                    if($col % sqrt(9) == 0) {
+                        $leftStyle = " region_border_left" ;
+                    }
+            ?>
+                <td class="sudoku_case<?php echo $topStyle ;?><?php echo $leftStyle ;?>"><input type="text" class="case" size="1" name="t[<?php echo $row ; ?>][<?php echo $col ; ?>]" id="t.<?php echo $row ; ?>.<?php echo $col ; ?>" value=""/></td>
+            <?php
+                }
+            ?>
+        </tr>
+    <?php
+        }
+    ?>
+</table>
+    <input type="hidden" name="size" value="9"/>
+    <select name="level">
+        <option value="easy">easy</option>
+        <option value="normal">normal</option>
+        <option value="hard">hard</option>
+        <option value="crazy">crazy</option>
+    </select>
+    <input type="submit" name="saveGrid" class="btn btn-primary btn-lg" value="Save"/>
+
+    </body>
+</html>
