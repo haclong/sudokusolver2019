@@ -36,9 +36,23 @@ class GridController {
         $command->dto()->id = uniqid() ;
         $command->dto()->size = (int) $data["size"] ;
         $command->dto()->level = $data["level"] ;
+
         
-//        $this->container->get('eventmanager')->trigger();
-        var_dump($command);
+        $this->container->get('eventmanager')->attach('CreateGrid', function($e) {
+            $event  = $e->getName();
+            $target = get_class($e->getTarget()); // "Example"
+            $params = $e->getParams();
+            printf(
+                'Handled event "%s" on target "%s", with parameters %s',
+                $event,
+                $target,
+                $params->payload()
+            );
+        });
+
+        
+        $this->container->get('eventmanager')->trigger('CreateGrid', $this, $command);
+//        var_dump($command);
         var_dump($command->payload()) ;
 
         return $this->container->get('renderer')->render($response, 'grid/submit.phtml', $args);

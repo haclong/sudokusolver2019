@@ -26,7 +26,7 @@ class CreateGrid {
     
     public function payload()
     {
-        return $this->dto->returnSelf($this->dto) ;
+        return json_encode($this->dto->returnSelf($this->dto)) ;
     }
 }
 

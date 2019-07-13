@@ -2,4 +2,4 @@
 /logs/*
 !/logs/README.md
 /nbproject/
-/SudokuSolver_old/
+/src/SudokuSolver_old/*
