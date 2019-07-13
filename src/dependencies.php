@@ -1,6 +1,13 @@
 <?php
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Monolog\Processor\UidProcessor;
 use Slim\App;
+use Slim\Views\PhpRenderer;
+use Sudoku\Domain\Command\CreateGrid;
+use Sudoku\Domain\Entity\Contract\CreateGridDTO;
+use Zend\EventManager\EventManager;
 
 return function (App $app) {
     $container = $app->getContainer();
@@ -8,21 +15,26 @@ return function (App $app) {
     // view renderer
     $container['renderer'] = function ($c) {
         $settings = $c->get('settings')['renderer'];
-        return new \Slim\Views\PhpRenderer($settings['template_path']);
+        return new PhpRenderer($settings['template_path']);
     };
 
     // monolog
     $container['logger'] = function ($c) {
         $settings = $c->get('settings')['logger'];
-        $logger = new \Monolog\Logger($settings['name']);
-        $logger->pushProcessor(new \Monolog\Processor\UidProcessor());
-        $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
+        $logger = new Logger($settings['name']);
+        $logger->pushProcessor(new UidProcessor());
+        $logger->pushHandler(new StreamHandler($settings['path'], $settings['level']));
         return $logger;
     };
     
     // event manager (zend)
     $container['eventmanager'] = function ($c) {
-        $eventmanager = new \Zend\EventManager\EventManager() ;
-        return $eventmanager;
+        return new EventManager() ;
+    };
+    
+    // commands
+    $container['creategrid'] = function ($c) {
+        $dto = new CreateGridDTO() ;
+        return new CreateGrid($dto) ;
     };
 };
