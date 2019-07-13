@@ -2,7 +2,7 @@
 
 namespace Sudoku\Domain\Command;
 
-use Sudoku\Domain\Entity\Contract\CreateGridDTO;
+use Sudoku\Infra\Dto\DTOinterface;
 
 /**
  * Description of CreateGrid
@@ -13,9 +13,8 @@ use Sudoku\Domain\Entity\Contract\CreateGridDTO;
 class CreateGrid {
     private $dto ;
     private $name = 'CreateGrid' ;
-    private $payload ;
     
-    public function __construct(CreateGridDTO $dto)
+    public function __construct(DTOinterface $dto)
     {
         $this->dto = $dto ;
     }
@@ -24,10 +23,10 @@ class CreateGrid {
     {
         return $this->dto ;
     }
-        
+    
     public function payload()
     {
-        return CreateGridDTO::export($this->dto) ; 
+        return $this->dto->returnSelf($this->dto) ;
     }
 }
 

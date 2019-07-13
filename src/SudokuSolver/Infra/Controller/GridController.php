@@ -5,7 +5,6 @@ namespace Sudoku\Infra\Controller;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Sudoku\Domain\Command\CreateGrid;
 //use Sudoku\Infra\Entity\SudokuGridFileToSave;
 //use Sudoku\Infra\Entity\SudokuGridFromPost;
 //use Sudoku\Infra\Entity\SudokuGridToFileMapper;
@@ -37,7 +36,10 @@ class GridController {
         $command->dto()->id = uniqid() ;
         $command->dto()->size = (int) $data["size"] ;
         $command->dto()->level = $data["level"] ;
-        var_dump($command->payload());
+        
+//        $this->container->get('eventmanager')->trigger();
+        var_dump($command);
+        var_dump($command->payload()) ;
 
         return $this->container->get('renderer')->render($response, 'grid/submit.phtml', $args);
     }

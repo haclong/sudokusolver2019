@@ -6,7 +6,7 @@ use Monolog\Processor\UidProcessor;
 use Slim\App;
 use Slim\Views\PhpRenderer;
 use Sudoku\Domain\Command\CreateGrid;
-use Sudoku\Domain\Entity\Contract\CreateGridDTO;
+use Sudoku\Infra\Dto\CreateGridDTO;
 use Zend\EventManager\EventManager;
 
 return function (App $app) {
