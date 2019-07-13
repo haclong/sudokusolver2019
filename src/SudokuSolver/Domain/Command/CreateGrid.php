@@ -12,7 +12,7 @@ use Sudoku\Infra\Dto\DTOinterface;
 //class CreateGrid implements CommandInterface {
 class CreateGrid {
     private $dto ;
-    private $name = 'CreateGrid' ;
+    private $name = Command::CREATE_GRID ;
     
     public function __construct(DTOinterface $dto)
     {
@@ -27,6 +27,11 @@ class CreateGrid {
     public function payload()
     {
         return json_encode($this->dto->returnSelf($this->dto)) ;
+    }
+    
+    public function name()
+    {
+        return $this->name ;
     }
 }
 

@@ -5,6 +5,7 @@ namespace Sudoku\Infra\Controller;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Sudoku\Domain\Command\Command;
 //use Sudoku\Infra\Entity\SudokuGridFileToSave;
 //use Sudoku\Infra\Entity\SudokuGridFromPost;
 //use Sudoku\Infra\Entity\SudokuGridToFileMapper;
@@ -37,21 +38,21 @@ class GridController {
         $command->dto()->size = (int) $data["size"] ;
         $command->dto()->level = $data["level"] ;
 
-        
-        $this->container->get('eventmanager')->attach('CreateGrid', function($e) {
-            $event  = $e->getName();
-            $target = get_class($e->getTarget()); // "Example"
-            $params = $e->getParams();
-            printf(
-                'Handled event "%s" on target "%s", with parameters %s',
-                $event,
-                $target,
-                $params->payload()
-            );
-        });
+//        
+//        $this->container->get('eventmanager')->attach(Command::CREATE_GRID, function($e) {
+//            $event  = $e->getName();
+//            $target = get_class($e->getTarget()); // "Example"
+//            $params = $e->getParams();
+//            printf(
+//                'Handled event "%s" on target "%s", with parameters %s',
+//                $event,
+//                $target,
+//                $params->payload()
+//            );
+//        });
 
         
-        $this->container->get('eventmanager')->trigger('CreateGrid', $this, $command);
+        $this->container->get('eventmanager')->trigger(Command::CREATE_GRID, $this, $command);
 //        var_dump($command);
         var_dump($command->payload()) ;
 
