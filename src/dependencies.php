@@ -6,6 +6,7 @@ use Monolog\Processor\UidProcessor;
 use Slim\App;
 use Slim\Views\PhpRenderer;
 use Sudoku\Domain\Command\CreateGrid;
+use Sudoku\Domain\Command\Handler\CreateGridHandler;
 use Sudoku\Infra\Dto\CreateGridDTO;
 use Zend\EventManager\EventManager;
 
@@ -32,9 +33,17 @@ return function (App $app) {
         return new EventManager() ;
     };
     
+    // command handlers
+    $container['creategridhandler'] = function ($c) {
+        $handler = new CreateGridHandler() ;
+        $handler->attach($c->get('eventmanager')) ;
+        return $handler ;
+    };
+    
     // commands
     $container['creategrid'] = function ($c) {
         $dto = new CreateGridDTO() ;
         return new CreateGrid($dto) ;
     };
+    
 };
