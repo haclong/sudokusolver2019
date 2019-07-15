@@ -8,6 +8,8 @@
 
 namespace Sudoku\Infra\Dto ;
 
+use Sudoku\Domain\Entity\Level;
+use Sudoku\Domain\Entity\Size;
 use Swaggest\JsonSchema\Constraint\Properties;
 use Swaggest\JsonSchema\Schema;
 use Swaggest\JsonSchema\Structure\ClassStructure;
@@ -28,9 +30,9 @@ class CreateGridDTO extends ClassStructure implements DTOinterface {
     {
         $properties->id = Schema::string();
         $properties->size = Schema::integer() ;
-        $properties->size->enum = [4, 9, 16, 25];
+        $properties->size->enum = Size::value() ;
         $properties->level = Schema::string() ;
-        $properties->level->enum = ['easy', 'normal', 'hard', 'nightmare'] ;        
+        $properties->level->enum = Level::value() ;    
     }
     
     public function returnSelf(ClassStructure $dto)

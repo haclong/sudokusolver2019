@@ -6,6 +6,8 @@ use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Sudoku\Domain\Command\Command;
+use Sudoku\Domain\Entity\Level;
+use Sudoku\Domain\Entity\Size;
 //use Sudoku\Infra\Entity\SudokuGridFileToSave;
 //use Sudoku\Infra\Entity\SudokuGridFromPost;
 //use Sudoku\Infra\Entity\SudokuGridToFileMapper;
@@ -24,6 +26,9 @@ class GridController {
     public function createAction(Request $request, Response $response, array $args) {
         // sample log message
         $this->container->get('logger')->info("create Grid") ;
+        
+        $args['size'] = Size::value() ;
+        $args['level'] = Level::value() ;
 
         return $this->container->get('renderer')->render($response, 'grid/create.phtml', $args);
     }

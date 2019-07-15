@@ -12,16 +12,20 @@
 
 		<form method="post">
 		    <select name="size">
-		        <option value="4">4</option>
-		        <option value="9">9</option>
-		        <option value="16">16</option>
-		        <option value="25">25</option>
+                        <?php
+                            foreach($size as $key => $value)
+                            {
+                                echo "<option value='".$key."'>".$value."</option>" ;
+                            }
+                        ?>
 		    </select>
 		    <select name="level">
-		        <option value="easy">easy</option>
-		        <option value="normal">normal</option>
-		        <option value="hard">hard</option>
-		        <option value="crazy">crazy</option>
+                        <?php
+                            foreach($level as $key => $value)
+                            {
+                                echo "<option value='".$key."'>".$value."</option>" ;
+                            }
+                        ?>
 		    </select>
 		    <input type="submit" name="createGrid" class="btn btn-primary btn-lg" value="Create"/>
 		</form>
