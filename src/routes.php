@@ -7,17 +7,20 @@ use Slim\Http\Response;
 return function (App $app) {
     $container = $app->getContainer();
 
-    $app->get('/Grid/create', Sudoku\Infra\Controller\GridController::class . ':createAction');
+    $app->get('/Grid', Sudoku\Infra\Controller\GridController::class . ':createAction')->setName('grid.create');
 
-    $app->post('/Grid/create', Sudoku\Infra\Controller\GridController::class . ':submitAction') ;
+    $app->post('/Grid', Sudoku\Infra\Controller\GridController::class . ':composeAction')->setName('grid.compose') ;
 
-    $app->get('/[{name}]', function (Request $request, Response $response, array $args) use ($container) {
-        // Sample log message
-        $container->get('logger')->info("Slim-Skeleton '/' route");
+    $app->post('/Grid/save', Sudoku\Infra\Controller\GridController::class . ':saveAction')->setName('grid.save') ;
 
-        // Render index view
-        return $container->get('renderer')->render($response, 'index.phtml', $args);
-    });
+//
+//    $app->get('/[{name}]', function (Request $request, Response $response, array $args) use ($container) {
+//        // Sample log message
+//        $container->get('logger')->info("Slim-Skeleton '/' route");
+//
+//        // Render index view
+//        return $container->get('renderer')->render($response, 'index.phtml', $args);
+//    });
 
 
 };

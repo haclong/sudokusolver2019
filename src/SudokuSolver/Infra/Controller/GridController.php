@@ -28,17 +28,17 @@ class GridController {
         return $this->container->get('renderer')->render($response, 'grid/create.phtml', $args);
     }
 
-    public function submitAction(Request $request, Response $response, array $args) {
+    public function composeAction(Request $request, Response $response, array $args) {
         $this->container->get('logger')->info('submit Grid creation');
 
         $data = $request->getParsedBody() ;
-        
+
         $this->container->get('creategridhandler') ;
-        
+
         $args['id'] = uniqid() ;
         $args['size'] = $data["size"] ;
         $args['level'] = $data["level"] ;
-        
+
 //        $command = $this->container->get('creategrid') ;
 //        $command->dto()->id = uniqid() ;
 //        $command->dto()->size = (int) $data["size"] ;
@@ -47,27 +47,20 @@ class GridController {
 //        $this->container->get('eventmanager')->trigger(Command::CREATE_GRID, $this, $command);
 //        var_dump($command);
 //        var_dump($command->payload()) ;
-        return $this->container->get('renderer')->render($response, 'grid/submit.phtml', $args);
+
+        return $this->container->get('renderer')->render($response, 'grid/compose.phtml', $args);
     }
-//
-//    public function newAction(Request $request, Response $response, array $args) {
-//        // Sample log message
-//        $this->container->get('logger')->info("Sudoku Solver '/new' route");
-//
-//        return $this->container->get('renderer')->render($response, 'new.phtml', $args);
-//    }
-//
-//    public function saveAction(Request $request, Response $response, array $args) {
-//        // Sample log message
-//        $this->container->get('logger')->info("Sudoku Solver '/new' route");
-//    
+
+    public function saveAction(Request $request, Response $response, array $args) {
+        // Sample log message
+        $this->container->get('logger')->info("Sudoku Solver '/Grid/save' route");
+    
 //        //    echo get_class($request->getParams()) ;
 //        $sudokuGrid = new SudokuGridFromPost($request->getParams()) ;
 //        $sudokuGridToFileMapper = new SudokuGridToFileMapper($sudokuGrid) ;
 //        new SudokuGridFileToSave('../datas/' .$sudokuGridToFileMapper->filepath, $sudokuGridToFileMapper->filecontent) ;
-//
-//        return $response->withJson($request->getParam('size')) ;
-////        return $this->renderer->render($response, 'new.phtml', $args);
-//    }
+
+//        return $this->renderer->render($response, 'new.phtml', $args);
+    }
 
 }
