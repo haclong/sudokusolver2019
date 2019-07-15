@@ -1,6 +1,6 @@
 <?php
 
-namespace Sudoku\Domain\Command\Handler ;
+namespace Sudoku\Infra\CommandHandler ;
 
 use Sudoku\Domain\Command\Command;
 use Zend\EventManager\EventInterface;

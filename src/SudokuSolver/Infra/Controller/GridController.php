@@ -35,15 +35,18 @@ class GridController {
         
         $this->container->get('creategridhandler') ;
         
-        $command = $this->container->get('creategrid') ;
-        $command->dto()->id = uniqid() ;
-        $command->dto()->size = (int) $data["size"] ;
-        $command->dto()->level = $data["level"] ;
+        $args['id'] = uniqid() ;
+        $args['size'] = $data["size"] ;
+        $args['level'] = $data["level"] ;
         
-        $this->container->get('eventmanager')->trigger(Command::CREATE_GRID, $this, $command);
+//        $command = $this->container->get('creategrid') ;
+//        $command->dto()->id = uniqid() ;
+//        $command->dto()->size = (int) $data["size"] ;
+//        $command->dto()->level = $data["level"] ;
+//        
+//        $this->container->get('eventmanager')->trigger(Command::CREATE_GRID, $this, $command);
 //        var_dump($command);
-        var_dump($command->payload()) ;
-
+//        var_dump($command->payload()) ;
         return $this->container->get('renderer')->render($response, 'grid/submit.phtml', $args);
     }
 //
