@@ -5,12 +5,8 @@ namespace Sudoku\Infra\Controller;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Sudoku\Domain\Command\Command;
 use Sudoku\Domain\Entity\Level;
 use Sudoku\Domain\Entity\Size;
-//use Sudoku\Infra\Entity\SudokuGridFileToSave;
-//use Sudoku\Infra\Entity\SudokuGridFromPost;
-//use Sudoku\Infra\Entity\SudokuGridToFileMapper;
 
 /**
  * Description of GridController
@@ -44,28 +40,40 @@ class GridController {
         $args['size'] = $data["size"] ;
         $args['level'] = $data["level"] ;
 
-//        $command = $this->container->get('creategrid') ;
-//        $command->dto()->id = uniqid() ;
-//        $command->dto()->size = (int) $data["size"] ;
-//        $command->dto()->level = $data["level"] ;
-//        
-//        $this->container->get('eventmanager')->trigger(Command::CREATE_GRID, $this, $command);
-//        var_dump($command);
-//        var_dump($command->payload()) ;
-
         return $this->container->get('renderer')->render($response, 'grid/compose.phtml', $args);
     }
 
     public function saveAction(Request $request, Response $response, array $args) {
         // Sample log message
         $this->container->get('logger')->info("Sudoku Solver '/Grid/save' route");
-    
-//        //    echo get_class($request->getParams()) ;
-//        $sudokuGrid = new SudokuGridFromPost($request->getParams()) ;
-//        $sudokuGridToFileMapper = new SudokuGridToFileMapper($sudokuGrid) ;
-//        new SudokuGridFileToSave('../datas/' .$sudokuGridToFileMapper->filepath, $sudokuGridToFileMapper->filecontent) ;
 
-//        return $this->renderer->render($response, 'new.phtml', $args);
+        $data = $request->getParsedBody() ;
+        
+        $path = $data["size"] . '/' . $data["level"] . '/' . $data["id"] . '.php' ;
+        $content = $this->mapToString($data["t"]);
+        $this->container->get('filesystem')->write($path, $content) ;
+        
+        $url = $this->container->get('router')->pathFor('home') ;
+        return $response->withStatus(302)->withHeader('Location', $url) ;
     }
 
+    private function mapToString($array)
+    {
+        $string = '<?php' . "\r\n" ;
+        
+        foreach($array as $row => $cols)
+        {
+            foreach($cols as $col => $value)
+            {
+                if(!empty($value))
+                {
+                    $string .= '$array['.$row.']['.$col.'] = '.$value.' ;'."\r\n" ;
+                }
+            }
+        }
+
+        $string .= 'return $array ;' ;
+        
+        return $string ;
+    }    
 }

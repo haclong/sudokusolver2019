@@ -1,5 +1,7 @@
 <?php
 
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
@@ -26,6 +28,12 @@ return function (App $app) {
         $logger->pushProcessor(new UidProcessor());
         $logger->pushHandler(new StreamHandler($settings['path'], $settings['level']));
         return $logger;
+    };
+    
+    // filesystem (flysystem)
+    $container['filesystem'] = function ($c) {
+        $adapter = new Local(__DIR__.'/../datas/') ;
+        return new Filesystem($adapter) ;
     };
     
     // event manager (zend)
