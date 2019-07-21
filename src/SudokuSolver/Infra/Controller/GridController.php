@@ -36,7 +36,7 @@ class GridController {
 
         $this->container->get('creategridhandler') ;
 
-        $args['id'] = uniqid() ;
+        $args['id'] = $data["id"] ;
         $args['size'] = $data["size"] ;
         $args['level'] = $data["level"] ;
 

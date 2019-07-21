@@ -22,6 +22,8 @@ class BaseTestCase extends TestCase
      * @var bool
      */
     protected $withMiddleware = true;
+    
+    protected $container ;
 
     /**
      * Process the application given a request method and URI
@@ -75,7 +77,14 @@ class BaseTestCase extends TestCase
         // Process the application
         $response = $app->process($request, $response);
 
+        $this->container = $app->getContainer(); 
+        
         // Return the response
         return $response;
+    }
+    
+    public function getContainer()
+    {
+        return $this->container ;
     }
 }
