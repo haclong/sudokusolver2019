@@ -34,7 +34,7 @@ class GridController {
 
         $data = $request->getParsedBody() ;
 
-        $this->container->get('creategridhandler') ;
+//        $this->container->get('creategridhandler') ;
 
         $args['id'] = $data["id"] ;
         $args['size'] = $data["size"] ;
