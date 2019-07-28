@@ -6,6 +6,10 @@ use Slim\Http\Response;
 
 return function (App $app) {
     $container = $app->getContainer();
+
+    $app->get('/Game', Sudoku\Infra\Controller\GameController::class . ':startAction')->setName('game.start');
+
+    $app->post('/Game', Sudoku\Infra\Controller\GameController::class . ':loadAction')->setName('game.load');
     
     $app->get('/Grid', Sudoku\Infra\Controller\GridController::class . ':createAction')->setName('grid.create');
 
@@ -21,6 +25,7 @@ return function (App $app) {
         // Render index view
         return $container->get('renderer')->render($response, 'index.phtml', $args);
     })->setName('home');
+
 
 //
 //    $app->get('/[{name}]', function (Request $request, Response $response, array $args) use ($container) {

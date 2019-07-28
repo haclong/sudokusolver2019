@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Sudoku Solver - Start Game</title>
+        
+        <link rel="stylesheet" href="../css/sudoku.css" />
+        <link rel="stylesheet" href="../css/bootstrap.min.css" />
+        <script src="../js/jquery-3.1.0.min.js"></script>
+    </head>
+    <body>
+
+		<form method="post">
+		    <select name="size">
+                        <?php
+                            foreach($size as $key => $value)
+                            {
+                                echo "<option value='".$key."'>".$value."</option>" ;
+                            }
+                        ?>
+		    </select>
+		    <select name="level">
+                        <?php
+                            foreach($level as $key => $value)
+                            {
+                                echo "<option value='".$key."'>".$value."</option>" ;
+                            }
+                        ?>
+		    </select>
+                    <input type="hidden" name="id" value="<?php echo uniqid(); ?>"/>
+		    <input type="submit" name="startGame" class="btn btn-primary btn-lg" value="Start"/>
+		</form>
+
+    </body>
+</html>
