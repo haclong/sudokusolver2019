@@ -5,8 +5,6 @@ namespace Sudoku\Infra\Controller;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Sudoku\Domain\Entity\Level;
-use Sudoku\Domain\Entity\Size;
 
 /**
  * Description of GameController
