@@ -82,25 +82,4 @@ class GridController {
 
         return $grid ;
     }    
-
-
-    private function mapToString($array)
-    {
-        $string = '<?php' . "\r\n" ;
-        
-        foreach($array as $row => $cols)
-        {
-            foreach($cols as $col => $value)
-            {
-                if(!empty($value))
-                {
-                    $string .= '$array['.$row.']['.$col.'] = '.$value.' ;'."\r\n" ;
-                }
-            }
-        }
-
-        $string .= 'return $array ;' ;
-        
-        return $string ;
-    }    
 }
