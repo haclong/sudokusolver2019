@@ -50,10 +50,6 @@ class GridControllerTest extends TestCase
                             ['renderer']
                         );
         $sut->createAction($this->request, $this->response, $args) ;
-
-        // sample log message
-//        $this->container->get('logger')->info("create Grid") ;
-//        $this->container->get('renderer')->render($response, 'grid/create.phtml', $args);
     }
 
     public function testComposeAction() {
@@ -91,12 +87,22 @@ class GridControllerTest extends TestCase
                          ->disableOriginalConstructor()
                          ->setMethods(['withStatus', 'withHeader'])
                          ->getMock();
+        $this->tile = $this->getMockBuilder(stdClass::class)
+                               ->setMethods(['set'])
+                               ->getMock();
+        $this->grid = $this->getMockBuilder(stdClass::class)
+                               ->setMethods(['create'])
+                               ->getMock();
 
         $container = $this->getMockBuilder(Container::class)
                           ->setMethods(['get'])
                           ->getMock();
         $container->method('get')
-                   ->will($this->onConsecutiveCalls($this->logger, $this->filesystem, $this->router)) ;
+                   ->will($this->onConsecutiveCalls($this->logger,
+                                                    $this->tile,
+                                                    $this->grid,
+                                                    $this->filesystem, 
+                                                    $this->router)) ;
 
         $sut = new GridController($container) ;
 
@@ -115,10 +121,12 @@ class GridControllerTest extends TestCase
                  ->method('withStatus')
                  ->willReturnSelf() ;
 
-        $container->expects($this->exactly(3))
+        $container->expects($this->exactly(5))
                         ->method('get')
                         ->withConsecutive(
                             ['logger'],
+                            ['tile'],
+                            ['grid'],
                             ['filesystem'],
                             ['router']
                         );

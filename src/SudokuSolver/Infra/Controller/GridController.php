@@ -34,8 +34,6 @@ class GridController {
 
         $data = $request->getParsedBody() ;
 
-//        $this->container->get('creategridhandler') ;
-
         $args['id'] = $data["id"] ;
         $args['size'] = $data["size"] ;
         $args['level'] = $data["level"] ;
@@ -49,13 +47,42 @@ class GridController {
 
         $data = $request->getParsedBody() ;
         
-        $path = $data["size"] . '/' . $data["level"] . '/' . $data["id"] . '.php' ;
-        $content = $this->mapToString($data["t"]);
+        $path = $data["size"] . '/' . $data["level"] . '/' . $data["id"] . '.json' ;
+        
+        $grid = $this->mapToGrid($data);
+        $content = json_encode($grid) ;
+
         $this->container->get('filesystem')->write($path, $content) ;
         
         $url = $this->container->get('router')->pathFor('home') ;
         return $response->withStatus(302)->withHeader('Location', $url) ;
     }
+    
+    
+    private function mapToGrid($datas)
+    {
+        $tiles = [] ;
+        $tileEntity = $this->container->get('tile') ;
+        
+        foreach($datas['t'] as $row => $cols)
+        {
+            foreach($cols as $col => $value)
+            {
+                if(!empty($value))
+                {
+                    $tile = clone $tileEntity ;
+                    $tile->set($datas['size'], $row, $col, $value) ;
+                    $tiles[] = $tile ;
+                }
+            }
+        }
+
+        $grid = $this->container->get('grid') ;
+        $grid->create($datas['size'], $datas['level'], $datas['id'], $tiles) ;
+
+        return $grid ;
+    }    
+
 
     private function mapToString($array)
     {

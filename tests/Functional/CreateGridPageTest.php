@@ -42,12 +42,18 @@ class CreateGridPageTest extends BaseTestCase
      */
     public function testPostSaveGridPage(array $grid)
     {
-        $grid['t'] = [] ;
-        $path = $grid['size']. '/' .$grid['level']. '/' .$grid['id']. '.php' ;
+        $grid['t'][0][0] = 1 ;
+        $grid['t'][1][0] = 2 ;
+        $grid['t'][2][0] = 3 ;
+        $grid['t'][3][0] = 4 ;
+        $path = $grid['size']. '/' .$grid['level']. '/' .$grid['id']. '.json' ;
         $response = $this->runApp('POST', '/Grid/save', $grid);
 
+        $expectedJson = '{"id":"'.$grid['id'].'","size":"4","level":"easy","tiles":[{"row":0,"col":0,"region":0,"value":1},{"row":1,"col":0,"region":0,"value":2},{"row":2,"col":0,"region":2,"value":3},{"row":3,"col":0,"region":2,"value":4}]}' ;
         
         $this->assertTrue($this->getContainer()->get('filesystem')->has($path)) ;
+        $this->assertFileExists('datas/' . $path) ;
+        $this->assertJsonStringEqualsJsonFile('datas/' . $path, $expectedJson) ;
         $this->assertEquals(302, $response->getStatusCode());
         $this->assertContains('/', $response->getHeader('Location')) ;
         

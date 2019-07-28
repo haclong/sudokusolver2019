@@ -8,6 +8,8 @@ use Monolog\Processor\UidProcessor;
 use Slim\App;
 use Slim\Views\PhpRenderer;
 use Sudoku\Domain\Command\CreateGrid;
+use Sudoku\Domain\Entity\Tile;
+use Sudoku\Domain\Entity\Grid;
 use Sudoku\Infra\CommandHandler\CreateGridHandler;
 use Sudoku\Infra\Dto\CreateGridDTO;
 use Zend\EventManager\EventManager;
@@ -54,4 +56,11 @@ return function (App $app) {
         return new CreateGrid($dto) ;
     };
     
+    // entities
+    $container['grid'] = function ($c) {
+        return new Grid() ;
+    } ;
+    $container['tile'] = function ($c) {
+        return new Tile() ;
+    } ;
 };
