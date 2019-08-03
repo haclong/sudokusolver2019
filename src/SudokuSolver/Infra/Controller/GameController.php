@@ -59,42 +59,12 @@ class GameController {
             {
                 $flag = false ;
                 $gridpath = $files[$key]['path'] ;
-                $grid = include('../datas/' . $gridpath) ;
+                $grid = $this->container->get('filesystem')->read($gridpath) ;
             }
         }
 
         $args['grid'] = $grid ;
-        $args['size'] = $data['size'] ;
-        $args['level'] = $data['level'] ;
 
         return $this->container->get('renderer')->render($response, 'game/load.phtml', $args);
-    }
-
-    public function saveAction(Request $request, Response $response, array $args) {
-        // Sample log message
-        $this->container->get('logger')->info("Sudoku Solver '/Grid/save' route");
-
-        $data = $request->getParsedBody() ;
-        
-        $path = $data["size"] . '/' . $data["level"] . '/' . $data["id"] . '.php' ;
-        $content = $this->mapToString($data["t"]);
-        $this->container->get('filesystem')->write($path, $content) ;
-        
-        $url = $this->container->get('router')->pathFor('home') ;
-        return $response->withStatus(302)->withHeader('Location', $url) ;
-
-//        $command = $this->container->get('creategrid') ;
-//        $command->dto()->id = uniqid() ;
-//        $command->dto()->size = (int) $data["size"] ;
-//        $command->dto()->level = $data["level"] ;
-//        
-//        $this->container->get('eventmanager')->trigger(Command::CREATE_GRID, $this, $command);
-//        var_dump($command);
-//        var_dump($command->payload()) ;
-
-        
-        
-
-//        return $this->renderer->render($response, 'new.phtml', $args);
     }
 }

@@ -9,7 +9,23 @@
         <script src="../js/jquery-3.1.0.min.js"></script>
     </head>
     <body>
+        <?php
+            $parsedGrid = json_decode($grid) ;
+            $size = $parsedGrid->size ;
+        ?>
 
+        <script>
+            $(document).ready(function() {
+                var grid = JSON.parse(JSON.stringify(<?php echo $grid; ?>)) ;
+                for(i=0; i<grid.tiles.length; i++) {
+                    var tile = grid.tiles[i] ;
+                    var element = document.getElementById('t.'+tile.row+'.'+tile.col) ;
+                    element.value = tile.value ; 
+                    element.setAttribute("readonly", "readonly") ;
+                }
+            });
+        
+    </script>
 
 
 <form method="post">
@@ -41,9 +57,7 @@
         }
     ?>
 </table>
-    <input type="hidden" name="size" value="<?php echo $size; ?>"/>
-    <input type="hidden" name="level" value="<?php echo $level; ?>"/>
-    <input type="submit" name="saveGrid" class="btn btn-primary btn-lg" value="Save"/>
+    <input type="submit" name="playGame" class="btn btn-primary btn-lg" value="Play"/>
 
     </body>
 </html>
