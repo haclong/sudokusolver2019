@@ -49,7 +49,7 @@ class GameController {
         $data = $request->getParsedBody() ;
 
 //        $this->container->get('creategridhandler') ;
-        $files = $this->container->get('filesystem')->listContents('', true) ;
+        $files = $this->container->get('filesystem')->listContents($data['size'].'/'.$data['level'].'/', true) ;
 
         $flag = true ;
         while($flag == true)
@@ -59,14 +59,13 @@ class GameController {
             {
                 $flag = false ;
                 $gridpath = $files[$key]['path'] ;
-                echo $gridpath ;
-                $t = include('../datas/' . $gridpath) ;
-                var_dump($t) ;
+                $grid = include('../datas/' . $gridpath) ;
             }
         }
 
-        $args['size'] = $data["size"] ;
-        $args['level'] = $data["level"] ;
+        $args['grid'] = $grid ;
+        $args['size'] = $data['size'] ;
+        $args['level'] = $data['level'] ;
 
         return $this->container->get('renderer')->render($response, 'game/load.phtml', $args);
     }
