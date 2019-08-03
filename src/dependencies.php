@@ -20,7 +20,9 @@ return function (App $app) {
     // view renderer
     $container['renderer'] = function ($c) {
         $settings = $c->get('settings')['renderer'];
-        return new PhpRenderer($settings['template_path']);
+        $renderer = new PhpRenderer($settings['template_path']) ;
+        $renderer->addAttribute('router', $c->get('router'));
+        return $renderer ;
     };
 
     // monolog

@@ -28,7 +28,6 @@
     </script>
 
 
-<form method="post">
 <table class="sudoku_grid">
     <?php
         for($row = 0; $row < $size; $row++)
@@ -57,7 +56,15 @@
         }
     ?>
 </table>
-    <input type="submit" name="playGame" class="btn btn-primary btn-lg" value="Play"/>
+    <button id="newGameButton"  class="btn btn-default" type="submit" name="newGame" value="newGame">New Game</button>
+    <button id="playGameButton"  class="btn btn-default" type="submit" name="play" value="Play">Play</button>
 
     </body>
+
+    <script>
+        $("#newGameButton").click(function() {
+            location.href= "<?php echo $router->pathFor('game.start') ; ?>" ;
+        }) ;
+
+    </script>
 </html>
