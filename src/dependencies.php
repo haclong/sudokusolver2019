@@ -7,11 +7,11 @@ use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Slim\App;
 use Slim\Views\PhpRenderer;
-use Sudoku\Domain\Command\CreateGrid;
+use Sudoku\Domain\Command\CreateGame;
 use Sudoku\Domain\Entity\Tile;
 use Sudoku\Domain\Entity\Grid;
-use Sudoku\Infra\CommandHandler\CreateGridHandler;
-use Sudoku\Infra\Dto\CreateGridDTO;
+use Sudoku\Infra\CommandHandler\CreateGameHandler;
+use Sudoku\Infra\Dto\CreateGameDTO;
 use Zend\EventManager\EventManager;
 
 return function (App $app) {
@@ -46,16 +46,16 @@ return function (App $app) {
     };
     
     // command handlers
-    $container['creategridhandler'] = function ($c) {
-        $handler = new CreateGridHandler() ;
+    $container['creategamehandler'] = function ($c) {
+        $handler = new CreateGameHandler() ;
         $handler->attach($c->get('eventmanager')) ;
         return $handler ;
     };
     
     // commands
-    $container['creategrid'] = function ($c) {
-        $dto = new CreateGridDTO() ;
-        return new CreateGrid($dto) ;
+    $container['creategame'] = function ($c) {
+        $dto = new CreateGameDTO() ;
+        return new CreateGame($dto) ;
     };
     
     // entities

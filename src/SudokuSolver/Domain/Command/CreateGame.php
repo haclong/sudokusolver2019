@@ -5,14 +5,14 @@ namespace Sudoku\Domain\Command;
 use Sudoku\Infra\Dto\DTOinterface;
 
 /**
- * Description of CreateGrid
+ * Description of CreateGame
  *
  * @author haclong
  */
 //class CreateGrid implements CommandInterface {
-class CreateGrid {
+class CreateGame {
     private $dto ;
-    private $name = Command::CREATE_GRID ;
+    private $name = Command::CREATE_GAME ;
     
     public function __construct(DTOinterface $dto)
     {

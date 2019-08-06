@@ -10,5 +10,5 @@ namespace Sudoku\Domain\Command ;
 
 class Command
 {
-    const CREATE_GRID = 'CreateGrid' ;
+    const CREATE_GAME = 'CreateGame' ;
 }
