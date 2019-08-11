@@ -2,19 +2,17 @@
 
 namespace Sudoku\Infra\Dto ;
 
-use Sudoku\Domain\Entity\Size;
 use Swaggest\JsonSchema\Constraint\Format;
 use Swaggest\JsonSchema\Constraint\Properties;
 use Swaggest\JsonSchema\Schema;
 use Swaggest\JsonSchema\Structure\ClassStructure;
 
-class CreateGameDTO extends ClassStructure implements DTOinterface {
-    /** @var int */
-    public $size ;
-    
+class GameCreatedEventDTO extends ClassStructure implements DTOinterface {
     /** @var string */
     public $id ;
-    public $createTime ;
+    public $datetime ;
+    public $name ;
+    public $gamecreated ;
     
     /**
      * @param Properties|static $properties
@@ -23,14 +21,14 @@ class CreateGameDTO extends ClassStructure implements DTOinterface {
     public static function setUpProperties($properties, Schema $schema)
     {
         $properties->id = Schema::string();
-        $properties->size = Schema::integer() ;
-        $properties->size->enum = Size::value() ;
-        $properties->createTime = Schema::string();
-        $properties->createTime->format = Format::DATE_TIME ;
+        $properties->name = Schema::string() ;
+        $properties->datetime = Schema::string();
+        $properties->datetime->format = Format::DATE_TIME ;
+        $properties->gamecreated = GameCreatedDTO::schema() ;
     }
-    
+        
     public function returnSelf(ClassStructure $dto)
     {
-        return CreateGameDTO::export($dto) ;
+        return GameCreatedWrapperDTO::export($dto) ;
     }
 } 

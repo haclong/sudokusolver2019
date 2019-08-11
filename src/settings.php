@@ -16,13 +16,13 @@ return [
             'level' => \Monolog\Logger::DEBUG,
         ],
 
-        // MySQL settings
-        'db' => [
-            'host' => 'localhost',
-            'user' => 'sudokuUser',
-            'pass' => 'HWFYeu9LG47kgyyh',
-            'dbname' => 'sudokuApplication'
-        ]
+//        // MySQL settings
+//        'db' => [
+//            'host' => 'localhost',
+//            'user' => 'sudokuUser',
+//            'pass' => 'HWFYeu9LG47kgyyh',
+//            'dbname' => 'sudokuApplication'
+//        ]
     ]
 ];
 

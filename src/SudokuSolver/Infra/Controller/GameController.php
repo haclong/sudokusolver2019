@@ -51,7 +51,7 @@ class GameController {
 
         $data = $request->getParsedBody() ;
 
-        $this->container->get('creategamehandler') ;
+        $this->container->get('gamecommandhandler') ;
         
         $timezone = new DateTimeZone('UTC') ;
         $date = new DateTime("now", $timezone) ;
@@ -60,7 +60,7 @@ class GameController {
         $command->dto()->id = uniqid() ;
         $command->dto()->size = (int) $data["size"] ;
         $command->dto()->createTime = $date->format(DATE_RFC3339) ;
-        
+       
         $this->container->get('eventmanager')->trigger(Command::CREATE_GAME, $this, $command);
 //        var_dump($command);
 //        var_dump($command->payload()) ; 

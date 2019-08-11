@@ -8,7 +8,7 @@ use Swaggest\JsonSchema\Constraint\Properties;
 use Swaggest\JsonSchema\Schema;
 use Swaggest\JsonSchema\Structure\ClassStructure;
 
-class CreateGameDTO extends ClassStructure implements DTOinterface {
+class GameAggregateDTO extends ClassStructure implements DTOinterface {
     /** @var int */
     public $size ;
     
@@ -31,6 +31,15 @@ class CreateGameDTO extends ClassStructure implements DTOinterface {
     
     public function returnSelf(ClassStructure $dto)
     {
-        return CreateGameDTO::export($dto) ;
+        return GameAggregateDTO::export($dto) ;
+    }
+    
+    public function init()
+    {
+        foreach($this->schema()->getPropertyNames() as $key => $value)
+        {
+            unset($this->$value) ;
+        }
+        return $this ;
     }
 } 
