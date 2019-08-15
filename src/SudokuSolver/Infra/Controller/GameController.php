@@ -28,6 +28,8 @@ class GameController {
         $args['level'] = [] ;
         $files = $this->container->get('filesystem')->listContents('', true) ;
         
+        $this->container->get('eventstore')->getEvents() ;
+        
         foreach($files as $value)
         {
             if($value['type'] == 'dir')

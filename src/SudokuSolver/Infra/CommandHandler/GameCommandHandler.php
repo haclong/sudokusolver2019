@@ -36,12 +36,12 @@ class GameCommandHandler implements ListenerAggregateInterface
     public function createGame(EventInterface $e)
     {
         // vérifier qu'un Game avec le même id n'existe pas déjà
-        if($this->aggregateExists($e->getParams()->dto()->id))
-        {
-            var_dump("aggregate already exist") ;
-        }
-        else
-        {
+//        if($this->aggregateExists($e->getParams()->dto()->id))
+//        {
+//            var_dump("aggregate already exist") ;
+//        }
+//        else
+//        {
             // créer un nouvel game aggregat identifier par son id
             $this->aggregate->init() ;
             
@@ -54,7 +54,7 @@ class GameCommandHandler implements ListenerAggregateInterface
             $event->generateEvent() ;
             
             $this->eventManager->trigger(Event::GAME_CREATED, $this, $event);
-        }
+//        }
     }
     
     public function setEventManager(EventManagerInterface $eventmanager)

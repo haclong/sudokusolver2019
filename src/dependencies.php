@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Client;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use Monolog\Handler\StreamHandler;
@@ -12,6 +13,7 @@ use Sudoku\Domain\Command\CreateGame;
 use Sudoku\Domain\Entity\Grid;
 use Sudoku\Domain\Entity\Tile;
 use Sudoku\Domain\Event\GameCreated;
+use Sudoku\Infra\Adapter\EventStoreAdapter;
 use Sudoku\Infra\CommandHandler\GameCommandHandler;
 use Sudoku\Infra\Dto\CreateGameDTO;
 use Sudoku\Infra\Dto\GameAggregateDTO;
@@ -44,11 +46,14 @@ return function (App $app) {
         return new Filesystem($adapter) ;
     };
     
-    // filesystem (flysystem)
+    // persistance event store
     $container['eventstore'] = function ($c) {
-        $adapter = new Local(__DIR__.'/../eventstore/', FILE_APPEND) ;
-        return new Filesystem($adapter) ;
-    };
+        $client = new Client([
+                        'base_uri' => 'http://127.0.0.1:2113/streams/',
+                        'headers' => ['Accept' => 'application/json']
+        ]) ;
+        return new EventStoreAdapter($client) ;
+    }; 
     
     // event manager (zend)
     $container['eventmanager'] = function ($c) {
@@ -60,7 +65,6 @@ return function (App $app) {
         $handler = new GameCommandHandler() ;
         $handler->attach($c->get('eventmanager')) ;
         $handler->setEventManager($c->get('eventmanager')) ;
-        $handler->setEventStore($c->get('eventstore')) ;
         $handler->setAggregate($c->get('gameaggregate')) ;
         $handler->setEvents(['gamecreated' => $c->get('gamecreated')]) ;
         return $handler ;
